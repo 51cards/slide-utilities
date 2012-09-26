@@ -4,21 +4,12 @@
 
 
 (define (scale-first-line L) (map  (lambda (x) (/ x (car (car L)))) (car L)))
-(define (reduce L) (map (lambda (x) 
-                          (map (lambda (y z) (- y z)) x 
-                               (map (lambda (zz)
-                                      (* zz (car x)))
-                                    (scale-first-line L))))
-                        (cdr L)))
+(define (reduce L) (map (lambda (x) (map (lambda (y z) (- y z)) x (map (lambda (zz) (* zz (car x))) (scale-first-line L)))) (cdr L)))
 
 ;t(scale-first-line M)
 
 (define (ref Mx) (if (null? (cdr Mx))  (list (scale-first-line Mx))
-                     (append 
-                      (list (scale-first-line Mx))
-                      (map (lambda (x)
-                             (append '(0) x))
-                           (ref (map cdr (reduce Mx))))
+                     (append (list (scale-first-line Mx)) (map (lambda (x)(append '(0) x)) (ref (map cdr (reduce Mx))))
                       
                       )
                      ))
