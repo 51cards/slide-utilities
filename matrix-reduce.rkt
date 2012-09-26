@@ -24,6 +24,14 @@
                      ))
 ;(define (subeach Vx Mx) ())
 
+(define (place-of-first-non-zero L x) (if (= 0 (car L))
+                                          (if (null? (cdr L)) null (place-of-first-non-zero (cdr L) (+ x 1)))
+                                              x))
+(define (scale-factor V x) (if (= 0 x)
+                               (car V)
+                               (scale-factor V (- x 1))))
+(place-of-first-non-zero '(0 0 0 0 2 0) 0)
+
 ;(define (rref Mx)
 ;  ((define (rr Mx) (append (list (subeach (car Mx) (map (lambda (x) (append '(0) x))(rr (map cdr (cdr Mx)))))) (map (lambda (x) (append '(0) x)) (ref (map cdr (cdr Mx))))))
 ;  (rr (ref Mx))))
