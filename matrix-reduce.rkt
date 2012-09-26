@@ -42,7 +42,7 @@
                                        (lambda (z) 
                                              (* z (scale-factor x (place-of-first-non-zero y 0)))) 
                                            y)
-                              ))
+                              ));; this is the function that is returning the wrong values!
 (define (place-of-first-non-zero L x) (if (= 0 (car L))
                                           (if (null? (cdr L)) null (place-of-first-non-zero (cdr L) (+ x 1)))
                                               x))
