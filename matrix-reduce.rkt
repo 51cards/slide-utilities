@@ -37,18 +37,18 @@
                                       (process-subtractions (append(list(scale-subtract 
                                                                          (car Mx) (cadr Mx)))
                                                                    (cddr Mx)))
-                                   ))
+                                   ));;this is the likely candidate for problems now
 (define (scale-subtract x y) (map - x (map
                                        (lambda (z) 
                                              (* z (scale-factor x (place-of-first-non-zero y 0)))) 
                                            y)
-                              ));; this is the function that is returning the wrong values!
+                              ))
 (define (place-of-first-non-zero L x) (if (= 0 (car L))
                                           (if (null? (cdr L)) null (place-of-first-non-zero (cdr L) (+ x 1)))
                                               x))
 (define (scale-factor V x) (if (= 0 x)
                                (car V)
-                               (scale-factor (cdr V) (- x 1)))) ;error in this function!
+                               (scale-factor (cdr V) (- x 1)))) 
 ;(place-of-first-non-zero '(0 0 0 0 2 0) 0)
 
 ;(define (rref Mx)
