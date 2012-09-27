@@ -1,6 +1,4 @@
 #lang racket
-;(append '(1) '(3))
-(define M (list (list 2 4 5 1) (list 1 4 2 0) (list 3 -2 2 1)))
 (define (fit-function-to-points points)
   (lambda (x)
     (apply + (map * (power-list x (- (length points) 1)) (coefficients points)))))
@@ -19,9 +17,6 @@
                                       (* zz (car x)))
                                     (scale-first-line L))))
                         (cdr L)))
-
-;(scale-first-line M)
-
 (define (ref Mx) (if (= 0 (car (car Mx)))
                      (ref (append (cdr Mx) (list (car Mx))))
                      (if (null? (cdr Mx))  (list (scale-first-line Mx))
@@ -61,29 +56,8 @@
 (define (scale-factor V x) (if (= 0 x)
                                (car V)
                                (scale-factor (cdr V) (- x 1)))) 
-;(place-of-first-non-zero '(0 0 0 0 2 0) 0)
 
-;(define (rref Mx)
-;  ((define (rr Mx) (append (list (subeach (car Mx) (map (lambda (x) (append '(0) x))(rr (map cdr (cdr Mx)))))) (map (lambda (x) (append '(0) x)) (ref (map cdr (cdr Mx))))))
-;  (rr (ref Mx))))
-
+;;; test functions to show this thing works;;;
 (ref '((1 3 9 27 5) (1 2 4 8 1) (1 1 1 1 8) (1 4 16 64 10)))
-(rref '((1 3 9 27 5) (1 2 4 8 1) (1 1 1 1 8) (1 4 16 64 10))) ;doesn't crash, but doesn't work yet ; getting so much closer!
+(rref '((1 3 9 27 5) (1 2 4 8 1) (1 1 1 1 8) (1 4 16 64 10)))
 (map (fit-function-to-points '((1 3) (2 4) (3 0))) '(0 1 2 3 4))
-
-;'((1 3 9 27 5) (0 1 5 19 4) (0 0 1 6 5 1/2) (0 0 0 1 -1 2/3))
-;'(((1 2 3 1 -2 5/6)) (((0 1 5 19 4)) (((0 0 1 6 5 1/2)) ((0 0 0 1 -1 2/3)))))
-;> (scale-subtract '(1 3 1 4 8) '(0 1 0 1 2))
-;'(1 2 1 3 6)
-;> (place-of-first-non-zero '(0 1 0 1 2) 0)
-;1
-;> (scale-factor '(1 3 1 4 8) 1)
-;1
-;> (scale-factor '(1 3 1 4 8) 2
-;                )
-;1
-;> ( map - '(1 2 3) '(4 5 6))
-;'(-3 -3 -3)
-;> (map - '(1 3 1 4 8) (map (lambda (z) (* z 3)) '(0 1 0 1 2)))
-;'(1 0 1 1 2)
-;> 
