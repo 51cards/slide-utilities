@@ -1,10 +1,12 @@
-This is a test.
+This code exists to create a function (fit-function-to-points points)
+  where (points) is a list of lists,
+    each member list containing two numbers: an x-coordinate and a y-coordinate.
 
-This is Kyle, adding something
+It returns a function that maps an input value to an output value,
+  such that all the inputs specified yield the outputs specified.
 
-No, really.
+Note that because the points describe a function, the same x-coordinate cannot appear twice in the list.
+  The function does not check for this error condition;
+    inputting the same x-coordinate twice will cause an error or infinite loop.
 
-
-another edit, yay
-
-and another
+To implement this polynomial to fit the points, the function uses matrix algebra.
