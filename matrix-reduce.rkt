@@ -1,8 +1,17 @@
 #lang racket
 ;(append '(1) '(3))
 (define M (list (list 2 4 5 1) (list 1 4 2 0) (list 3 -2 2 1)))
-
-
+(define (fit-function-to-points points)
+  (lambda (x)
+    (apply + (map * (power-list x (- (length points) 1)) (coefficients points)))))
+(define (coefficients points)
+  (right-column (rref (map (lambda (pair-of-points)(makeline pair-of-points (length points))) points))))
+(define (makeline my-pair n)
+  (append (power-list (car my-pair) n) (cdr my-pair)))
+(define (power-list x n)
+  (if (= 0 n) (list 1)
+      (append (list 1) (map (lambda (y) (* x y)) (power-list x (- n 1))))))
+                        
 (define (scale-first-line L) (map  (lambda (x) (/ x (car (car L)))) (car L)))
 (define (reduce L) (map (lambda (x) 
                           (map (lambda (y z) (- y z)) x 
@@ -13,12 +22,14 @@
 
 ;(scale-first-line M)
 
-(define (ref Mx) (if (null? (cdr Mx))  (list (scale-first-line Mx))
-                     (append 
-                      (list (scale-first-line Mx))
-                      (map (lambda (x)
-                             (append '(0) x))
-                           (ref (map cdr (reduce Mx)))))))
+(define (ref Mx) (if (= 0 (car (car Mx)))
+                     (ref (append (cdr Mx) (list (car Mx))))
+                     (if (null? (cdr Mx))  (list (scale-first-line Mx))
+                         (append 
+                          (list (scale-first-line Mx))
+                          (map (lambda (x)
+                                 (append '(0) x))
+                               (ref (map cdr (reduce Mx))))))))
 
 (define (right-column Mx) (map car (map reverse Mx)))
 
@@ -58,7 +69,7 @@
 
 (ref '((1 3 9 27 5) (1 2 4 8 1) (1 1 1 1 8) (1 4 16 64 10)))
 (rref '((1 3 9 27 5) (1 2 4 8 1) (1 1 1 1 8) (1 4 16 64 10))) ;doesn't crash, but doesn't work yet ; getting so much closer!
-
+(map (fit-function-to-points '((1 3) (2 4) (3 0))) '(0 1 2 3 4))
 
 ;'((1 3 9 27 5) (0 1 5 19 4) (0 0 1 6 5 1/2) (0 0 0 1 -1 2/3))
 ;'(((1 2 3 1 -2 5/6)) (((0 1 5 19 4)) (((0 0 1 6 5 1/2)) ((0 0 0 1 -1 2/3)))))
