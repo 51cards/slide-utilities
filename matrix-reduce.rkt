@@ -14,6 +14,9 @@
          (/ x (car (car L))))
        (car L)))
 
+(define (right-column Mx)
+  (map car (map reverse Mx)))
+
 (define (place-of-first-non-zero L x)
   (if (= 0 (car L))
       (if (null? (cdr L))
@@ -27,6 +30,9 @@
       (scale-factor (cdr V) (- x 1))))
 
 ;;;;; Functions based off of the standalone functions
+
+(define (makeline my-pair n)
+  (append (power-list (car my-pair) n) (cdr my-pair)))
 
 (define (scale-subtract x y)
   (map -
@@ -83,34 +89,6 @@
     (apply + (map *
                   (power-list x (- (length points) 1))
                   (coefficients points)))))
-
-
-
-(define (makeline my-pair n)
-  (append (power-list (car my-pair) n) (cdr my-pair)))
-
-
-
-                        
-
-
-
-
-
-
-(define (right-column Mx)
-  (map car (map reverse Mx)))
-
-
-
-
-
-
-
-
-
-
-
 
 
 
