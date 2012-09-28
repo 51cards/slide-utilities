@@ -13,11 +13,13 @@
 (define (makeline my-pair n)
   (append (power-list (car my-pair) n) (cdr my-pair)))
 
+
 (define (power-list x n)
-  (if (= 0 n)
-      (list 1)
-      (append (list 1)
-              (map (lambda (y) (* x y)) (power-list x (- n 1))))))
+  (if (< n 0) '()
+      (cons 1
+            (map (lambda (y)
+                   (* x y))
+                 (power-list x (- n 1))))))
                         
 (define (scale-first-line L)
   (map (lambda (x) (/ x (car (car L))))
