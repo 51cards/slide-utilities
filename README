@@ -10,3 +10,5 @@ Note that because the points describe a function, the same x-coordinate cannot a
     inputting the same x-coordinate twice will cause an error or infinite loop.
 
 To implement this polynomial to fit the points, the function uses matrix algebra.
+
+Now hosted in a new repo!
